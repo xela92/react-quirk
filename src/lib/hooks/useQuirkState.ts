@@ -4,7 +4,6 @@ import {Quirk} from '../quirk'
 type QuirkStateConfig = {
   debug?: boolean
 }
-
 export default function useQuirkState<T>(
   quirk: Quirk<T>,
   config?: QuirkStateConfig,

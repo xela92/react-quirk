@@ -1,3 +1,3 @@
-import * as quirk from './quirk';
-import * as useQuirkState from "./hooks/useQuirkState";
+import quirk from './quirk';
+import useQuirkState from "./hooks/useQuirkState";
 export { quirk, useQuirkState };

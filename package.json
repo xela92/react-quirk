@@ -1,18 +1,20 @@
 {
   "name": "react-quirk",
   "description": "React-ish State management with superpowers",
-  "version": "1.0.6",
+  "version": "1.0.9",
   "type": "module",
+  "moduleResolution": "node",
   "packageManager": "yarn@3.3.1",
   "files": [
     "dist"
   ],
-  "main": "./dist/quirk.umd.js",
-  "module": "./dist/quirk.es.js",
+  "main": "./dist/quirk.umd.cjs",
+  "module": "./dist/quirk.js",
+  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "import": "./dist/quirk.es.js",
-      "require": "./dist/quirk.umd.js"
+      "import": "./dist/quirk.js",
+      "require": "./dist/quirk.umd.cjs"
     }
   },
   "scripts": {
@@ -20,17 +22,21 @@
     "build": "tsc && vite build",
     "preview": "vite preview"
   },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
   "peerDependencies": {
-    "react": ">16.8.0",
-    "react-dom": ">16.8.0"
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "@types/react": "^18.0.26",
-    "@types/react-dom": "^18.0.9",
+    "@types/node": "^18.11.18",
+    "@types/react": "^18.0.27",
+    "@types/react-dom": "^18.0.10",
     "@vitejs/plugin-react": "^3.0.1",
-    "react": ">16.8.0",
-    "react-dom": ">16.8.0",
     "typescript": "^4.9.3",
-    "vite": "^4.0.4"
+    "vite": "^4.0.4",
+    "vite-plugin-dts": "^1.7.1"
   }
 }
