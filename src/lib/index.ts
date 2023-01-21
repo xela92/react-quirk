@@ -1,4 +1,3 @@
-import quirk from './quirk'
-export {quirk}
-import useQuirkState from './hooks/useQuirkState'
-export {useQuirkState}
+import * as quirk from './quirk';
+import * as useQuirkState from "./hooks/useQuirkState";
+export { quirk, useQuirkState };
