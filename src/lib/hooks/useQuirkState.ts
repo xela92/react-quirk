@@ -21,6 +21,7 @@ export default function useQuirkState<T>(
 
   const load = useCallback(() => {
     setLoading(true)
+    setError(null)
     return quirk
       .get()
       .then((newValue) => {
