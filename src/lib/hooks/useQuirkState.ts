@@ -3,8 +3,8 @@ import {Quirk} from '../quirk'
 
 type QuirkStateConfig = {
   debug?: boolean,
-    onSuccess?: (value: any) => void,
-    onError?: (error: Error) => void,
+  onSuccess?: (value: any) => void,
+  onError?: (error: Error) => void,
 }
 export default function useQuirkState<T>(
   quirk: Quirk<T>,
@@ -43,7 +43,7 @@ export default function useQuirkState<T>(
   useEffect(() => {
     if (firstLoad) {
       debug && console.log('QUIRK##FIRST_LOAD')
-      load().then(onSuccess).catch(onError)
+      load()
     } else {
       debug && console.log('QUIRK##ALREADY_LOADED')
     }
