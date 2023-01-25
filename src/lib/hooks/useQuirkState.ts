@@ -8,7 +8,7 @@ export default function useQuirkState<T>(
   quirk: Quirk<T>,
   config?: QuirkStateConfig,
 ) {
-  const [state, setState] = useState<Quirk<T>['initialValue'] | T>(
+  const [state, setState] = useState<T | undefined>(
     quirk.overrideInitialValue !== undefined
       ? quirk.overrideInitialValue
       : quirk.initialValue,
