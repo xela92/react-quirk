@@ -37,10 +37,11 @@ export default function useQuirkState<T>(
   }, [])
 
   useEffect(() => {
-    debug && console.log('QUIRK##LOAD')
     if (firstLoad) {
       debug && console.log('QUIRK##FIRST_LOAD')
       load()
+    } else {
+      debug && console.log('QUIRK##LOAD')
     }
     setFirstLoad(false)
   }, [load, firstLoad])
