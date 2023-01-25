@@ -52,5 +52,5 @@ export default function useQuirkState<T>(
     return Promise.resolve(updatedValue)
   }, [])
 
-  return [state, onChange, { reload: load, loading, error }] as const
+  return [state as T, onChange, { reload: load, loading, error }] as const
 }
