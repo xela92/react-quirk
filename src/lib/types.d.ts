@@ -1,6 +1,7 @@
 
 declare module "react-quirk" {
-    import {Quirk} from "./quirk";
+    import {Quirk, QuirkConfig} from "./quirk";
+    import {QuirkStateConfig} from "./hooks/useQuirkState";
 
     function quirk(config: QuirkConfig): Quirk
 

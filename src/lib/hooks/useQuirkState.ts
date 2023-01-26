@@ -1,7 +1,7 @@
 import {useCallback, useEffect, useState} from 'react'
 import {Quirk} from '../quirk'
 
-type QuirkStateConfig = {
+export type QuirkStateConfig = {
   debug?: boolean,
   onSuccess?: (value: any) => void,
   onError?: (error: Error) => void,
@@ -50,9 +50,9 @@ export default function useQuirkState<T>(
     setFirstLoad(false)
   }, [load, firstLoad, debug])
 
-  const onChange = useCallback(async (newValue: T): Promise<T> => {
+  const onChange = useCallback(async (newValue: T, config?: any): Promise<T> => {
     debug && console.log('QUIRK##ONCHANGE', newValue)
-    const updatedValue = await quirk.set(newValue)
+    const updatedValue = await quirk.set(newValue, config)
     setState(updatedValue)
     return Promise.resolve(updatedValue)
   }, [debug, quirk])
