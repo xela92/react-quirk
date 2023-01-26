@@ -8,26 +8,27 @@ It is designed to work in a React friendly way, and works with promises.
 
 ## Why Quirk?
 
-In React, **managing API calls and business logic is a pain**. Making business logic hooks is great,
-but it feels somehow unnatural to make a hook for every single API call you make and always return the same kind of data.
-Often, you want to make a call, forget about mapping the data and how API works, and just have your result in a state, 
-and **be able to update it with a simple setStat**e. 
+In React, **managing API calls and business logic is often a pain**. Making business logic hooks is great,
+but it feels somehow unnatural to make a hook for every single API call you make always returning the same kind of data and have to manage the lifecycle of the call (loading, error...).
+Often, you just wanted to make a call and forget about mapping the data and how API works, and just save your result in a state, 
+**being able to update it with a simple setState.**
+
 This is where **Quirk** comes in.
 
 ## How does it work?
 
 **Quirk** wants from you a simple object with:
-- a `getter` function, which returns a promise
-- a `setter` function, which returns a promise
+- a `getter` function, which must return a promise that returns the external data
+- a `setter` function, which must return a promise that returns the new data
 - an `initialValue`, what you generally want your initial state to be
 - an _optional_ `overrideInitialValue` field to override the initial state from the component
 
-You can then define a function that returns a quirk configured with that object, to have your API logic point set (you can keep it with your models, for instance).
-The getter function manages getting data, and maybe remaps it if needed; the setter function manages update, delete, and create operations.
+You can then pass it to the quirk function, wrap it in a function / object (I prefer a function to be able to pass an `overrideInitialValue`) and you have **your API logic point set** (you can keep it with your models, for instance).
+The getter function manages getting data, and maybe remaps it if you need it; the setter function manages update, delete, and create operations.
 The setter function receives a config made up from the fields you passed to the setState, the actual state, 
-and the config you passed to the quirk function.
+and the config you passed to the `useQuirkState` hook.
 
-Then, you can literally do anything you need to update your APIs!
+Then, you can literally do anything you need to update your APIs, and it's all in your quirk!
 
 Example:
 
@@ -36,13 +37,14 @@ export const handleUsers = (initialValue) =>
     quirk<User[]>({
     getter: async () => (await API.getUsers()) as User[],
     setter: async (newValue, config) => {
-        const { deleted, onError, state } = config
-        if (!!deleted) {
+        const { deletedUser, onError: handleError, state: previousState } = config
+        if (!!deletedUser) {
             try {
-                await API.deleteUser(deleted, state)
+                const deletedUserFromApi = await API.deleteUser(deletedUser)
+                return previousState.filter((user) => user.id !== deletedUserFromApi.id)
             } catch (error) {
-                onError && onError(error)
-                return state
+                handleError && handleError(error)
+                return previousState
             }
         }
         return (newValue || []) as User[]
@@ -71,7 +73,7 @@ Example:
   )
 ```
 
-You can then use the `setUsers` function to update your state, even to add more to your state or even ask for data deletion (in the example, we pass a _deleted_ field to instruct the setter to call the correct API).
+You can then use the `setUsers` function to update your state, even to add more to your state or even ask for data deletion (in the example, we pass a _deletedUser_ field and use it in the setter to call the correct API).
 
 Update:
 ```ts
@@ -79,7 +81,7 @@ setUsers([...users, newUser])
 ```
 Delete:
 ```ts
-setUsers(users, { deleted: user })
+setUsers(users, { deletedUser: user })
 ```
 
 ## What's next?
