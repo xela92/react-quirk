@@ -50,12 +50,12 @@ export default function useQuirkState<T>(
     setFirstLoad(false)
   }, [load, firstLoad, debug])
 
-  const onChange = useCallback(async (newValue: T, config?: any): Promise<T> => {
-    debug && console.log('QUIRK##ONCHANGE', newValue)
-    const updatedValue = await quirk.set(newValue, config)
+  const onChange = useCallback(async (newValue: T, props?: any): Promise<T> => {
+    const updatedValue = await quirk.set(newValue, {...(props || {}), state, ...(config || {})} )
+    debug && console.log('QUIRK##ONCHANGE', updatedValue)
     setState(updatedValue)
     return Promise.resolve(updatedValue)
-  }, [debug, quirk])
+  }, [debug, quirk, state, config])
 
   return [state as T, onChange, { reload: load, loading, error }] as const
 }
