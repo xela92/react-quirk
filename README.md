@@ -84,5 +84,5 @@ setUsers(users, { deleted: user })
 
 ## What's next?
 
-The goal for next releases is find an equilibrium between power and simplicity, and make it even more React friendly.
-I like the KISS principle: if Quirk is simple yet powerful, it can be scaled to any complexity level without becoming an overhead for developers.
+The goal for next releases is to find a balance between power and simplicity, and make **Quirk** even more React friendly.
+I like the KISS principle: if **Quirk** is simple yet powerful, it can be scaled to any complexity level without becoming an overhead for developers.
