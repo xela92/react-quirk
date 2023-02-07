@@ -1,7 +1,7 @@
 {
   "name": "react-quirk",
   "description": "React-ish State management with superpowers",
-  "version": "1.0.19",
+  "version": "1.0.20",
   "type": "module",
   "moduleResolution": "node",
   "packageManager": "yarn@3.3.1",
@@ -11,6 +11,16 @@
   "main": "./dist/quirk.umd.cjs",
   "module": "./dist/quirk.js",
   "types": "./dist/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/xela92/react-quirk"
+  },
+  "homepage": "https://github.com/xela92/react-quirk",
+  "author": "xela92",
+  "license": "GPL-2.0-or-later",
+  "bugs": {
+    "url": "https://github.com/xela92/react-quirk/issues"
+  },
   "exports": {
     ".": {
       "import": "./dist/quirk.js",
@@ -20,7 +30,9 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "publish": "yarn build && yarn publish:package",
+    "publish:package": "yarn npm publish --access public"
   },
   "dependencies": {
     "react": "^18.2.0",
@@ -37,6 +49,6 @@
     "@vitejs/plugin-react": "^3.0.1",
     "typescript": "^4.9.3",
     "vite": "^4.0.4",
-    "vite-plugin-dts": "^1.7.1"
+    "vite-plugin-dts": "^1.7.2"
   }
 }
