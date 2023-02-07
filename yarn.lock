@@ -2005,6 +2005,9 @@ __metadata:
     typescript: ^4.9.3
     vite: ^4.0.4
     vite-plugin-dts: ^1.7.1
+  peerDependencies:
+    react: ^18.2.0
+    react-dom: ^18.2.0
   languageName: unknown
   linkType: soft
 
