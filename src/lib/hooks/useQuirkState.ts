@@ -1,3 +1,4 @@
+//@ts-ignore
 import {useCallback, useEffect, useState} from 'react'
 import {Quirk} from '../quirk'
 

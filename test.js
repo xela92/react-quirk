@@ -1,1 +1,0 @@
-import {quirk} from "./dist";
