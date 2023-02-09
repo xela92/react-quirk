@@ -21,6 +21,15 @@
   "bugs": {
     "url": "https://github.com/xela92/react-quirk/issues"
   },
+  "keywords": [
+    "react",
+    "state",
+    "state-management",
+    "react-state",
+    "react-state-management",
+    "react-quirk",
+    "quirk"
+  ],
   "exports": {
     ".": {
       "import": "./dist/quirk.js",
