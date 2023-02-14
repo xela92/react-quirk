@@ -51,8 +51,10 @@ export default function useQuirkState<T>(
     setFirstLoad(false)
   }, [load, firstLoad, debug])
 
-  const onChange = useCallback(async (newValue: T, props?: any): Promise<T> => {
-    const updatedValue = await quirk.set(newValue, {...(props || {}), state, ...(config || {})} )
+  const onChange = useCallback(async (newValue: SetStateNewValueType<T>, props?: any): Promise<T> => {
+    const setStateValue = typeof newValue === 'function' ? newValue(state) : newValue
+
+    const updatedValue = await quirk.set(setStateValue, {...(props || {}), state, ...(config || {})} )
     debug && console.log('QUIRK##ONCHANGE', updatedValue)
     setState(updatedValue)
     return Promise.resolve(updatedValue)
@@ -60,3 +62,5 @@ export default function useQuirkState<T>(
 
   return [state as T, onChange, { reload: load, loading, error }] as const
 }
+
+type SetStateNewValueType<T> =  T extends Function ? ((previousValue: T) => void): T
