@@ -15,7 +15,7 @@ export type Quirk<T> = {
    * takes the new value and returns the updated value (which will be set as the new state) - should be used to update the backend
    * @param newValue
    */
-  set: (newValue: T, config?: any) => Promise<T>
+  set: (newValue: T | undefined, config?: any) => Promise<T>
 }
 
 export type QuirkConfig<T> =  {

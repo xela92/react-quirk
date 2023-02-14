@@ -11,7 +11,7 @@ export default function useQuirkState<T>(
   quirk: Quirk<T>,
   config?: QuirkStateConfig,
 ) {
-  const [state, setState] = useState<T | undefined>(
+  const [state, setState] = useState<T | (() => T) | undefined>(
     quirk.overrideInitialValue !== undefined
       ? quirk.overrideInitialValue
       : quirk.initialValue,
@@ -52,15 +52,24 @@ export default function useQuirkState<T>(
   }, [load, firstLoad, debug])
 
   const onChange = useCallback(async (newValue: SetStateNewValueType<T>, props?: any): Promise<T> => {
-    const setStateValue = typeof newValue === 'function' ? newValue(state) : newValue
-
+    let setStateValue: T = ({} as T)
+    if (isFunction<T>(newValue)) {
+      if (isFunction<T>(state)) {
+        setStateValue = newValue(state())
+      } else {
+        setStateValue = newValue(state)
+      }
+    }
     const updatedValue = await quirk.set(setStateValue, {...(props || {}), state, ...(config || {})} )
     debug && console.log('QUIRK##ONCHANGE', updatedValue)
     setState(updatedValue)
     return Promise.resolve(updatedValue)
   }, [debug, quirk, state, config])
 
-  return [state as T, onChange, { reload: load, loading, error }] as const
+  return [state as T, onChange as ((newValue: SetStateNewValueType<T>, props?: any) => Promise<T>), { reload: load, loading, error }] as const
 }
 
-type SetStateNewValueType<T> =  T extends Function ? ((previousValue: T) => void): T
+function isFunction<T>(arg: any): arg is (...param: any[]) => T {
+  return typeof arg === "function"
+}
+type SetStateNewValueType<T> = ((prevState: T) => T ) | T | undefined
